@@ -60,7 +60,6 @@ void assertEquals(string expected, string actual, string message = "")
   if (expected == actual)
   {
     cout << "PASSED: " << message << endl;
-    ;
   }
   else
   {
