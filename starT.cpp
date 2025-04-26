@@ -9,24 +9,43 @@ void assertEquals(string expected, string actual, string message);
 string starT(int width, int height);
 void runTests(void);
 
-// Write starT per specifictions in the lab writeup
-
+// Write starT per specifications in the lab writeup
 string starT(int width, int height)
 {
+  if (width < 3 || height < 2 || width % 2 == 0)
+  {
+    return "";
+  }
+
   string result = "";
-  result = "stub"; // TODO: remove this line, replace with correct code
+
+  // Top row
+  for (int i = 0; i < width; i++)
+  {
+    result += "*";
+  }
+  result += "\n";
+
+  // Vertical column
+  int middle = width / 2;
+  for (int i = 1; i < height; i++)
+  {
+    for (int j = 0; j < width; j++)
+    {
+      if (j == middle)
+        result += "*";
+      else
+        result += " ";
+    }
+    result += "\n";
+  }
+
   return result;
 }
 
 // Test-Driven Development; check expected results against actual
-
 void runTests(void)
 {
-
-  // The following line works because in C and C++ when string literals
-  // are separated only by whitespace (space, tab, newline), they
-  // automatically get concatenated into a single string literal
-
   string starT34Expected =
       "***\n"
       " * \n"
@@ -55,7 +74,6 @@ void runTests(void)
 }
 
 // Test harness
-
 void assertEquals(string expected, string actual, string message = "")
 {
   if (expected == actual)
@@ -73,21 +91,30 @@ void assertEquals(string expected, string actual, string message = "")
 }
 
 // Main function
-
 int main(int argc, char *argv[])
 {
+  // Check for correct number of arguments
+  if (argc != 3)
+  {
+    cout << "Usage: " << argv[0] << " width height" << endl;
+    cout << "Enter -1 -1 to run test suite." << endl;
+    return 1;
+  }
 
-  // TODO: Add check for parameters
-  // and code to print usage message
+  // Convert arguments to integers
+  int width = atoi(argv[1]);
+  int height = atoi(argv[2]);
 
-  // TODO: Add code to get width and height from command line args
-  // code that checks if they are both -1; if so, call runTests()
-  // then exit.
+  // Run tests if requested
+  if (width == -1 && height == -1)
+  {
+    runTests();
+    return 0;
+  }
 
-  runTests();
-
-  // TODO: Add code that calls the starT function and prints
-  // the result on cout (without an extra newline)
+  // Generate and print the T
+  string result = starT(width, height);
+  cout << result; // no extra newline
 
   return 0;
 }
